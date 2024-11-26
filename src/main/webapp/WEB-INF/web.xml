@@ -7,9 +7,4 @@
     <servlet-name>EstagioServlet</servlet-name>
     <servlet-class>br.ufrrj.servlet.EstagioServlet</servlet-class>
   </servlet>
-
-  <servlet-mapping>
-    <servlet-name>EstagioServlet</servlet-name>
-    <url-pattern>/estagio</url-pattern>
-  </servlet-mapping>
 </web-app>
