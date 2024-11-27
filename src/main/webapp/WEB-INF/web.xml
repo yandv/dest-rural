@@ -2,9 +2,4 @@
 
 <web-app>
   <display-name>DEST UFRRj</display-name>
-
-  <servlet>
-    <servlet-name>EstagioServlet</servlet-name>
-    <servlet-class>br.ufrrj.servlet.EstagioServlet</servlet-class>
-  </servlet>
 </web-app>

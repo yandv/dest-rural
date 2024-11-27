@@ -1,0 +1,30 @@
+participant "IdentificarUsuarioServlet<meta class="domain.controllers.serviceless.IdentificarUsuarioServlet"></meta>" as domain.controllers.serviceless.IdentificarUsuarioServlet
+participant "ParameterUtil<meta class="domain.utils.ParameterUtil"></meta>" as domain.utils.ParameterUtil
+participant "ServletRequestWrapper (ServletRequest)<meta class="jakarta.servlet.ServletRequestWrapper"></meta>" as jakarta.servlet.ServletRequestWrapper #SteelBlue
+participant "DiscenteGateway<meta class="domain.gateway.DiscenteGateway"></meta>" as domain.gateway.DiscenteGateway
+participant "FilterChain<meta class="jakarta.servlet.FilterChain"></meta>" as jakarta.servlet.FilterChain #SteelBlue
+
+autoactivation
+autonumber
+messagestyle <wordwrap:50>
+
+domain.controllers.serviceless.IdentificarUsuarioServlet->domain.utils.ParameterUtil:parseString(req, "email")<meta ref="domain.controllers.serviceless.IdentificarUsuarioServlet:1036" class="domain.utils.ParameterUtil" method="parseString" argTypes="jakarta.servlet.http.HttpServletRequest,java.lang.String"></meta>
+domain.utils.ParameterUtil->jakarta.servlet.ServletRequestWrapper:getParameter(parameterName)<meta ref="domain.utils.ParameterUtil:261" class="jakarta.servlet.ServletRequestWrapper" method="getParameter" argTypes="java.lang.String"></meta>
+domain.utils.ParameterUtil<--jakarta.servlet.ServletRequestWrapper:String
+alt value == null || value.isBlank()
+end
+domain.controllers.serviceless.IdentificarUsuarioServlet<--domain.utils.ParameterUtil:value : String<meta ref="domain.utils.ParameterUtil:470"></meta>
+domain.controllers.serviceless.IdentificarUsuarioServlet->domain.utils.ParameterUtil:parseString(req, "senha")<meta ref="domain.controllers.serviceless.IdentificarUsuarioServlet:1097" class="domain.utils.ParameterUtil" method="parseString" argTypes="jakarta.servlet.http.HttpServletRequest,java.lang.String"></meta>
+domain.utils.ParameterUtil->jakarta.servlet.ServletRequestWrapper:getParameter(parameterName)<meta ref="domain.utils.ParameterUtil:261" class="jakarta.servlet.ServletRequestWrapper" method="getParameter" argTypes="java.lang.String"></meta>
+domain.utils.ParameterUtil<--jakarta.servlet.ServletRequestWrapper:String
+alt value == null || value.isBlank()
+end
+domain.controllers.serviceless.IdentificarUsuarioServlet<--domain.utils.ParameterUtil:value : String<meta ref="domain.utils.ParameterUtil:470"></meta>
+domain.controllers.serviceless.IdentificarUsuarioServlet->domain.gateway.DiscenteGateway:pegarDiscentePeloEmail(email)<meta ref="domain.controllers.serviceless.IdentificarUsuarioServlet:1161" class="domain.gateway.DiscenteGateway" method="pegarDiscentePeloEmail" argTypes="java.lang.String"></meta>
+domain.controllers.serviceless.IdentificarUsuarioServlet<--domain.gateway.DiscenteGateway:new Discente("email", "email", "email") : Discente<meta ref="domain.gateway.DiscenteGateway:309"></meta>
+alt usuario == null || !usuario.getSenha().equals(senha)
+end
+domain.controllers.serviceless.IdentificarUsuarioServlet->jakarta.servlet.ServletRequestWrapper:setAttribute("usuario", usuario)<meta ref="domain.controllers.serviceless.IdentificarUsuarioServlet:1355" class="jakarta.servlet.ServletRequestWrapper" method="setAttribute" argTypes="java.lang.String,java.lang.Object"></meta>
+domain.controllers.serviceless.IdentificarUsuarioServlet<--jakarta.servlet.ServletRequestWrapper:void
+domain.controllers.serviceless.IdentificarUsuarioServlet->jakarta.servlet.FilterChain:doFilter(request, response)<meta ref="domain.controllers.serviceless.IdentificarUsuarioServlet:1406" class="jakarta.servlet.FilterChain" method="doFilter" argTypes="jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse"></meta>
+domain.controllers.serviceless.IdentificarUsuarioServlet<--jakarta.servlet.FilterChain:void

@@ -1,0 +1,87 @@
+participant "CriaPedEstagServlet<meta class="domain.controllers.serviceless.CriaPedEstagServlet"></meta>" as domain.controllers.serviceless.CriaPedEstagServlet
+participant "ServletRequestWrapper (ServletRequest)<meta class="jakarta.servlet.ServletRequestWrapper"></meta>" as jakarta.servlet.ServletRequestWrapper #SteelBlue
+participant "ParameterUtil<meta class="domain.utils.ParameterUtil"></meta>" as domain.utils.ParameterUtil
+participant "Usuario<meta class="domain.model.Usuario"></meta>" as domain.model.Usuario
+participant "PedEstagGateway<meta class="domain.gateway.PedEstagGateway"></meta>" as domain.gateway.PedEstagGateway
+participant "HttpServletResponseWrapper (HttpServletResponse)<meta class="jakarta.servlet.http.HttpServletResponseWrapper"></meta>" as jakarta.servlet.http.HttpServletResponseWrapper #SteelBlue
+
+autoactivation
+autonumber
+messagestyle <wordwrap:50>
+
+domain.controllers.serviceless.CriaPedEstagServlet->jakarta.servlet.ServletRequestWrapper:getAttribute("usuario")<meta ref="domain.controllers.serviceless.CriaPedEstagServlet:872" class="jakarta.servlet.ServletRequestWrapper" method="getAttribute" argTypes="java.lang.String"></meta>
+domain.controllers.serviceless.CriaPedEstagServlet<--jakarta.servlet.ServletRequestWrapper:Object
+domain.controllers.serviceless.CriaPedEstagServlet->domain.utils.ParameterUtil:parseInt(req, "cargaHorariaCumprida")<meta ref="domain.controllers.serviceless.CriaPedEstagServlet:965" class="domain.utils.ParameterUtil" method="parseInt" argTypes="jakarta.servlet.http.HttpServletRequest,java.lang.String"></meta>
+domain.utils.ParameterUtil->jakarta.servlet.ServletRequestWrapper:getParameter(parameterName)<meta ref="domain.utils.ParameterUtil:1124" class="jakarta.servlet.ServletRequestWrapper" method="getParameter" argTypes="java.lang.String"></meta>
+domain.utils.ParameterUtil<--jakarta.servlet.ServletRequestWrapper:String
+alt value == null || value.isBlank()
+end
+domain.controllers.serviceless.CriaPedEstagServlet<--domain.utils.ParameterUtil:Integer.parseInt(value) : int<meta ref="domain.utils.ParameterUtil:1351"></meta>
+alt cargaHorariaTotalDisciplinasObrigatoriasCumpridas / 15 < 80
+end
+domain.controllers.serviceless.CriaPedEstagServlet->domain.utils.ParameterUtil:parseDouble(req, "ira")<meta ref="domain.controllers.serviceless.CriaPedEstagServlet:1355" class="domain.utils.ParameterUtil" method="parseDouble" argTypes="jakarta.servlet.http.HttpServletRequest,java.lang.String"></meta>
+domain.utils.ParameterUtil->jakarta.servlet.ServletRequestWrapper:getParameter(parameterName)<meta ref="domain.utils.ParameterUtil:593" class="jakarta.servlet.ServletRequestWrapper" method="getParameter" argTypes="java.lang.String"></meta>
+domain.utils.ParameterUtil<--jakarta.servlet.ServletRequestWrapper:String
+alt value == null || value.isBlank()
+end
+domain.controllers.serviceless.CriaPedEstagServlet<--domain.utils.ParameterUtil:Double.parseDouble(value) : double<meta ref="domain.utils.ParameterUtil:820"></meta>
+alt ira < 7
+end
+domain.controllers.serviceless.CriaPedEstagServlet->jakarta.servlet.ServletRequestWrapper:getParameter("enderecoResidencial")<meta ref="domain.controllers.serviceless.CriaPedEstagServlet:1617" class="jakarta.servlet.ServletRequestWrapper" method="getParameter" argTypes="java.lang.String"></meta>
+domain.controllers.serviceless.CriaPedEstagServlet<--jakarta.servlet.ServletRequestWrapper:String
+domain.controllers.serviceless.CriaPedEstagServlet->domain.utils.ParameterUtil:parseInt(req, "cargaHorariaSemanal")<meta ref="domain.controllers.serviceless.CriaPedEstagServlet:1693" class="domain.utils.ParameterUtil" method="parseInt" argTypes="jakarta.servlet.http.HttpServletRequest,java.lang.String"></meta>
+domain.utils.ParameterUtil->jakarta.servlet.ServletRequestWrapper:getParameter(parameterName)<meta ref="domain.utils.ParameterUtil:1124" class="jakarta.servlet.ServletRequestWrapper" method="getParameter" argTypes="java.lang.String"></meta>
+domain.utils.ParameterUtil<--jakarta.servlet.ServletRequestWrapper:String
+alt value == null || value.isBlank()
+end
+domain.controllers.serviceless.CriaPedEstagServlet<--domain.utils.ParameterUtil:Integer.parseInt(value) : int<meta ref="domain.utils.ParameterUtil:1351"></meta>
+alt cargaHorariaSemanal > 30
+end
+domain.controllers.serviceless.CriaPedEstagServlet->domain.utils.ParameterUtil:parseBoolean(req, "primeiroEstagio")<meta ref="domain.controllers.serviceless.CriaPedEstagServlet:2003" class="domain.utils.ParameterUtil" method="parseBoolean" argTypes="jakarta.servlet.http.HttpServletRequest,java.lang.String"></meta>
+domain.utils.ParameterUtil->jakarta.servlet.ServletRequestWrapper:getParameter(parameterName)<meta ref="domain.utils.ParameterUtil:1661" class="jakarta.servlet.ServletRequestWrapper" method="getParameter" argTypes="java.lang.String"></meta>
+domain.utils.ParameterUtil<--jakarta.servlet.ServletRequestWrapper:String
+alt value == null || value.isBlank()
+end
+domain.controllers.serviceless.CriaPedEstagServlet<--domain.utils.ParameterUtil:Boolean.parseBoolean(value) : boolean<meta ref="domain.utils.ParameterUtil:1870"></meta>
+domain.controllers.serviceless.CriaPedEstagServlet->domain.utils.ParameterUtil:parseString(req, "nomeEmpresa")<meta ref="domain.controllers.serviceless.CriaPedEstagServlet:2081" class="domain.utils.ParameterUtil" method="parseString" argTypes="jakarta.servlet.http.HttpServletRequest,java.lang.String"></meta>
+domain.utils.ParameterUtil->jakarta.servlet.ServletRequestWrapper:getParameter(parameterName)<meta ref="domain.utils.ParameterUtil:261" class="jakarta.servlet.ServletRequestWrapper" method="getParameter" argTypes="java.lang.String"></meta>
+domain.utils.ParameterUtil<--jakarta.servlet.ServletRequestWrapper:String
+alt value == null || value.isBlank()
+end
+domain.controllers.serviceless.CriaPedEstagServlet<--domain.utils.ParameterUtil:value : String<meta ref="domain.utils.ParameterUtil:470"></meta>
+domain.controllers.serviceless.CriaPedEstagServlet->domain.utils.ParameterUtil:parseString(req, "enderecoEmpresa")<meta ref="domain.controllers.serviceless.CriaPedEstagServlet:2158" class="domain.utils.ParameterUtil" method="parseString" argTypes="jakarta.servlet.http.HttpServletRequest,java.lang.String"></meta>
+domain.utils.ParameterUtil->jakarta.servlet.ServletRequestWrapper:getParameter(parameterName)<meta ref="domain.utils.ParameterUtil:261" class="jakarta.servlet.ServletRequestWrapper" method="getParameter" argTypes="java.lang.String"></meta>
+domain.utils.ParameterUtil<--jakarta.servlet.ServletRequestWrapper:String
+alt value == null || value.isBlank()
+end
+domain.controllers.serviceless.CriaPedEstagServlet<--domain.utils.ParameterUtil:value : String<meta ref="domain.utils.ParameterUtil:470"></meta>
+domain.controllers.serviceless.CriaPedEstagServlet->domain.utils.ParameterUtil:parseString(req, "modalidade")<meta ref="domain.controllers.serviceless.CriaPedEstagServlet:2234" class="domain.utils.ParameterUtil" method="parseString" argTypes="jakarta.servlet.http.HttpServletRequest,java.lang.String"></meta>
+domain.utils.ParameterUtil->jakarta.servlet.ServletRequestWrapper:getParameter(parameterName)<meta ref="domain.utils.ParameterUtil:261" class="jakarta.servlet.ServletRequestWrapper" method="getParameter" argTypes="java.lang.String"></meta>
+domain.utils.ParameterUtil<--jakarta.servlet.ServletRequestWrapper:String
+alt value == null || value.isBlank()
+end
+domain.controllers.serviceless.CriaPedEstagServlet<--domain.utils.ParameterUtil:value : String<meta ref="domain.utils.ParameterUtil:470"></meta>
+domain.controllers.serviceless.CriaPedEstagServlet->domain.utils.ParameterUtil:parseString(req, "resumoAtividades")<meta ref="domain.controllers.serviceless.CriaPedEstagServlet:2312" class="domain.utils.ParameterUtil" method="parseString" argTypes="jakarta.servlet.http.HttpServletRequest,java.lang.String"></meta>
+domain.utils.ParameterUtil->jakarta.servlet.ServletRequestWrapper:getParameter(parameterName)<meta ref="domain.utils.ParameterUtil:261" class="jakarta.servlet.ServletRequestWrapper" method="getParameter" argTypes="java.lang.String"></meta>
+domain.utils.ParameterUtil<--jakarta.servlet.ServletRequestWrapper:String
+alt value == null || value.isBlank()
+end
+domain.controllers.serviceless.CriaPedEstagServlet<--domain.utils.ParameterUtil:value : String<meta ref="domain.utils.ParameterUtil:470"></meta>
+domain.controllers.serviceless.CriaPedEstagServlet->domain.utils.ParameterUtil:parseString(req, "relacaoConteudo")<meta ref="domain.controllers.serviceless.CriaPedEstagServlet:2394" class="domain.utils.ParameterUtil" method="parseString" argTypes="jakarta.servlet.http.HttpServletRequest,java.lang.String"></meta>
+domain.utils.ParameterUtil->jakarta.servlet.ServletRequestWrapper:getParameter(parameterName)<meta ref="domain.utils.ParameterUtil:261" class="jakarta.servlet.ServletRequestWrapper" method="getParameter" argTypes="java.lang.String"></meta>
+domain.utils.ParameterUtil<--jakarta.servlet.ServletRequestWrapper:String
+alt value == null || value.isBlank()
+end
+domain.controllers.serviceless.CriaPedEstagServlet<--domain.utils.ParameterUtil:value : String<meta ref="domain.utils.ParameterUtil:470"></meta>
+domain.controllers.serviceless.CriaPedEstagServlet->domain.utils.ParameterUtil:parseString(req, "motivoIntencao")<meta ref="domain.controllers.serviceless.CriaPedEstagServlet:2474" class="domain.utils.ParameterUtil" method="parseString" argTypes="jakarta.servlet.http.HttpServletRequest,java.lang.String"></meta>
+domain.utils.ParameterUtil->jakarta.servlet.ServletRequestWrapper:getParameter(parameterName)<meta ref="domain.utils.ParameterUtil:261" class="jakarta.servlet.ServletRequestWrapper" method="getParameter" argTypes="java.lang.String"></meta>
+domain.utils.ParameterUtil<--jakarta.servlet.ServletRequestWrapper:String
+alt value == null || value.isBlank()
+end
+domain.controllers.serviceless.CriaPedEstagServlet<--domain.utils.ParameterUtil:value : String<meta ref="domain.utils.ParameterUtil:470"></meta>
+domain.controllers.serviceless.CriaPedEstagServlet->domain.model.Usuario:getId()<meta ref="domain.controllers.serviceless.CriaPedEstagServlet:2563" class="domain.model.Usuario" method="getId" argTypes=""></meta>
+domain.controllers.serviceless.CriaPedEstagServlet<--domain.model.Usuario:String
+domain.controllers.serviceless.CriaPedEstagServlet->domain.gateway.PedEstagGateway:criarPedEstag(usuario.getId(), nomeEmpresa)<meta ref="domain.controllers.serviceless.CriaPedEstagServlet:2533" class="domain.gateway.PedEstagGateway" method="criarPedEstag" argTypes="java.lang.String,java.lang.String"></meta>
+domain.controllers.serviceless.CriaPedEstagServlet<--domain.gateway.PedEstagGateway:new PedidoEstagio(1, discenteId, nomeEmpresa) : PedidoEstagio<meta ref="domain.gateway.PedEstagGateway:608"></meta>
+domain.controllers.serviceless.CriaPedEstagServlet->jakarta.servlet.http.HttpServletResponseWrapper:setStatus(204)<meta ref="domain.controllers.serviceless.CriaPedEstagServlet:2603" class="jakarta.servlet.http.HttpServletResponseWrapper" method="setStatus" argTypes="int"></meta>
+domain.controllers.serviceless.CriaPedEstagServlet<--jakarta.servlet.http.HttpServletResponseWrapper:void
