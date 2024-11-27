@@ -35,13 +35,8 @@ public class CriarSupervisorServlet extends HttpServlet {
         var pedidoEstagio = this.pedidoEstagioGateway
                 .pegarPedidoEstagioPeloNumeroPedidoEstagio(numeroPedidoEstagio);
 
-        if (pedidoEstagio == null) {
-            throw new InvalidRequestOrder();
-        }
-
-        if (pedidoEstagio.getSupervisorId() == null) {
-            throw new IntershipRequestConflict();
-        }
+        pedidoEstagio.validarPedidoExiste();
+        pedidoEstagio.validarSupervisorAtribuido();
 
         var discente = discenteGateway.pegarDiscentePeloNumeroPedidoEstagio(numeroPedidoEstagio);
 

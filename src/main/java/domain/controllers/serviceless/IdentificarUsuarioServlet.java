@@ -33,9 +33,11 @@ public class IdentificarUsuarioServlet implements Filter {
 
         var usuario = this.discenteGateway.pegarDiscentePeloEmail(email);
 
-        if (usuario == null || !usuario.getSenha().equals(senha)) {
-            throw new UserInvalidPasswordException();
+        if (usuario == null) {
+            throw new UserInvalidPasswordException("Usuário não encontrado.");
         }
+
+        usuario.validarSenha(senha);
 
         request.setAttribute("usuario", usuario);
 
