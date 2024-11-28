@@ -19,7 +19,7 @@ public class IdentificarUsuarioServlet implements Filter {
     private DiscenteGateway discenteGateway;
 
     public IdentificarUsuarioServlet() {
-        this.discenteGateway = new DiscenteGateway();
+        this.discenteGateway = DiscenteGateway.getInstance();
     }
 
     @Override

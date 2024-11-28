@@ -3,6 +3,7 @@ package domain.controllers.serviceless;
 import java.io.IOException;
 
 import domain.exception.DomainException;
+import domain.gateway.DiscenteGateway;
 import domain.gateway.PedEstagGateway;
 import domain.model.Discente;
 import domain.model.PedidoEstagio;
@@ -17,9 +18,11 @@ import jakarta.servlet.http.HttpServletResponse;
 public class CriaPedEstagServlet extends HttpServlet {
 
     private PedEstagGateway pedEstagGateway;
+    private DiscenteGateway discenteGateway;
 
     public CriaPedEstagServlet() {
-        this.pedEstagGateway = new PedEstagGateway();
+        this.pedEstagGateway = PedEstagGateway.getInstance();
+        this.discenteGateway = DiscenteGateway.getInstance();
     }
 
     @Override
@@ -40,6 +43,9 @@ public class CriaPedEstagServlet extends HttpServlet {
 
         var pedEstag = pedEstagGateway.criarPedEstag(usuario.getId(), nomeEmpresa,
                 cargaHorariaCumprida, ira, cargaHorariaSemanal, primeiroEstagio);
+
+        usuario.associarPedidoEstagio(pedEstag.getNumeroPedidoEstagio());
+        discenteGateway.salvarDiscente(usuario);
 
         resp.setContentType("text/html");
         resp.getWriter().println("<html><body>");

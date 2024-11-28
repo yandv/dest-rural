@@ -17,9 +17,9 @@ public class EstagioService {
     private final SupervisorGateway supervisorGateway;
 
     public EstagioService() {
-        this.pedEstagGateway = new PedEstagGateway();
-        this.discenteGateway = new DiscenteGateway();
-        this.supervisorGateway = new SupervisorGateway();
+        this.pedEstagGateway = PedEstagGateway.getInstance();
+        this.discenteGateway = DiscenteGateway.getInstance();
+        this.supervisorGateway = SupervisorGateway.getInstance();
     }
 
     public Usuario autenticarDiscente(String email, String senha) throws UserInvalidPasswordException {
@@ -50,8 +50,11 @@ public class EstagioService {
         validarIRA(ira);
         validarCargaHorariaSemanal(cargaHorariaSemanal);
 
-        pedEstagGateway.criarPedEstag(usuario.getId(), nomeEmpresa,
+        var pedEstag = pedEstagGateway.criarPedEstag(usuario.getId(), nomeEmpresa,
                 cargaHorariaCumprida, ira, cargaHorariaSemanal, primeiroEstagio);
+
+        usuario.associarPedidoEstagio(pedEstag.getNumeroPedidoEstagio());
+        discenteGateway.salvarDiscente(usuario);
 
     }
 

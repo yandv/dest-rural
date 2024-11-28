@@ -21,9 +21,9 @@ public class CriarSupervisorServlet extends HttpServlet {
     private SupervisorGateway supervisorGateway;
 
     public CriarSupervisorServlet() {
-        this.pedidoEstagioGateway = new PedEstagGateway();
-        this.discenteGateway = new DiscenteGateway();
-        this.supervisorGateway = new SupervisorGateway();
+        this.pedidoEstagioGateway = PedEstagGateway.getInstance();
+        this.discenteGateway = DiscenteGateway.getInstance();
+        this.supervisorGateway = SupervisorGateway.getInstance();
     }
 
     @Override

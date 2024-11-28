@@ -1,16 +1,33 @@
 package domain.gateway;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import domain.model.PedidoEstagio;
 
 public class PedEstagGateway {
 
+    private static PedEstagGateway instance;
+
+    public static PedEstagGateway getInstance() {
+        if (instance == null) {
+            instance = new PedEstagGateway();
+        }
+        return instance;
+    }
+
+    private Map<Integer, PedidoEstagio> pedEstagMap;
+
+    protected PedEstagGateway() {
+        pedEstagMap = new HashMap<>();
+    }
+
     public PedidoEstagio pegarPedidoEstagioPeloNumeroPedidoEstagio(int numeroPedidoEstagio) {
-        return new PedidoEstagio(numeroPedidoEstagio, "id do discente", "IBM",
-                30, 7.3, 30, true);
+        return this.pedEstagMap.get(numeroPedidoEstagio);
     }
 
     public void salvarPedEstag(PedidoEstagio pedidoEstagio) {
-        System.out.println("Pedido de estágio salvo com sucesso!");
+        this.pedEstagMap.put(pedidoEstagio.getNumeroPedidoEstagio(), pedidoEstagio);
     }
 
     public PedidoEstagio criarPedEstag(String discenteId, String nomeEmpresa,
