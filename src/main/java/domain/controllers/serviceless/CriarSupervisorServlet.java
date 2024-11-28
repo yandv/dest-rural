@@ -3,8 +3,6 @@ package domain.controllers.serviceless;
 import java.io.IOException;
 
 import domain.exception.impl.BadRequestException;
-import domain.exception.impl.IntershipRequestConflict;
-import domain.exception.impl.InvalidRequestOrder;
 import domain.gateway.DiscenteGateway;
 import domain.gateway.PedEstagGateway;
 import domain.gateway.SupervisorGateway;
@@ -35,7 +33,10 @@ public class CriarSupervisorServlet extends HttpServlet {
         var pedidoEstagio = this.pedidoEstagioGateway
                 .pegarPedidoEstagioPeloNumeroPedidoEstagio(numeroPedidoEstagio);
 
-        pedidoEstagio.validarPedidoExiste();
+        if (pedidoEstagio == null) {
+            throw new IllegalArgumentException("Pedido de estágio não encontrado.");
+        }
+
         pedidoEstagio.validarSupervisorAtribuido();
 
         var discente = discenteGateway.pegarDiscentePeloNumeroPedidoEstagio(numeroPedidoEstagio);
@@ -55,10 +56,10 @@ public class CriarSupervisorServlet extends HttpServlet {
             throw new BadRequestException("Email inválido");
         }
 
-        this.supervisorGateway.criarSupervisor(supervisorNome, supervisorFuncao, supervisorEmail,
+        var supervisor = this.supervisorGateway.criarSupervisor(supervisorNome, supervisorFuncao, supervisorEmail,
                 supervisorSenha, supervisorTelefone);
-        pedidoEstagio.setSupervisorId(supervisorEmail);
-        this.pedidoEstagioGateway.salvarPedidoEstagio(pedidoEstagio);
+        pedidoEstagio.associarSupervisor(supervisor);
+        this.pedidoEstagioGateway.salvarPedEstag(pedidoEstagio);
     }
 
     private boolean isEmailFormValid(String email) {

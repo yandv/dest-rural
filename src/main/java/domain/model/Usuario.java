@@ -2,6 +2,8 @@ package domain.model;
 
 import java.util.UUID;
 
+import domain.exception.impl.UserInvalidPasswordException;
+
 public abstract class Usuario {
 
     private String id;
@@ -15,6 +17,12 @@ public abstract class Usuario {
         this.email = email;
         this.nome = nome;
         this.senha = senha;
+    }
+
+    public void validarSenha(String senha) {
+        if (!this.senha.equals(senha)) {
+            throw new UserInvalidPasswordException();
+        }
     }
 
     public String getId() {

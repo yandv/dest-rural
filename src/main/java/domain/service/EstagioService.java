@@ -34,7 +34,7 @@ public class EstagioService {
 
     public void solicitarEstagio(
             Discente usuario,
-            int cargaHorariaTotalDisciplinasObrigatoriasCumpridas,
+            int cargaHorariaCumprida,
             double ira,
             String enderecoResidencial,
             int cargaHorariaSemanal,
@@ -46,11 +46,13 @@ public class EstagioService {
             String relacaoConteudo,
             String motivoIntencao) throws BadRequestException {
 
-        validarCargaHoraria(cargaHorariaTotalDisciplinasObrigatoriasCumpridas);
+        validarCargaHoraria(cargaHorariaCumprida);
         validarIRA(ira);
         validarCargaHorariaSemanal(cargaHorariaSemanal);
 
-        pedEstagGateway.criarPedEstag(usuario.getId(), nomeEmpresa);
+        pedEstagGateway.criarPedEstag(usuario.getId(), nomeEmpresa,
+                cargaHorariaCumprida, ira, cargaHorariaSemanal, primeiroEstagio);
+
     }
 
     public void registrarSupervisorParaPedidoEstagio(
@@ -79,18 +81,18 @@ public class EstagioService {
             throw new BadRequestException("Email inválido");
         }
 
-        supervisorGateway.criarSupervisor(nome, funcao, email, senha, telefone);
+        var supervisor = supervisorGateway.criarSupervisor(nome, funcao, email, senha, telefone);
 
-        pedidoEstagio.setSupervisorId(email);
-        pedEstagGateway.salvarPedidoEstagio(pedidoEstagio);
+        pedidoEstagio.associarSupervisor(supervisor);
+        pedEstagGateway.salvarPedEstag(pedidoEstagio);
     }
 
     private boolean isEmailFormValid(String email) {
         return email != null && email.matches("^[A-Za-z0-9+_.-]+@(.+)$");
     }
 
-    private void validarCargaHoraria(int cargaHorariaTotalDisciplinasObrigatoriasCumpridas) throws BadRequestException {
-        if (cargaHorariaTotalDisciplinasObrigatoriasCumpridas / 15 < 80) {
+    private void validarCargaHoraria(int cargaHorariaCumprida) throws BadRequestException {
+        if (cargaHorariaCumprida / 15 < 80) {
             throw new BadRequestException(
                     "O discente ainda não cumpriu a carga horária mínima de disciplinas obrigatórias para estágio, precisa ter cumprido menos de 80 créditos em disciplinas obrigatórias.");
         }

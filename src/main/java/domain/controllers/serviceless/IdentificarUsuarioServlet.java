@@ -12,7 +12,6 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 @WebFilter("/without-service/criar-pedido-intencao-estagio")
 public class IdentificarUsuarioServlet implements Filter {
@@ -34,7 +33,7 @@ public class IdentificarUsuarioServlet implements Filter {
         var usuario = this.discenteGateway.pegarDiscentePeloEmail(email);
 
         if (usuario == null) {
-            throw new UserInvalidPasswordException("Usuário não encontrado.");
+            throw new UserInvalidPasswordException();
         }
 
         usuario.validarSenha(senha);

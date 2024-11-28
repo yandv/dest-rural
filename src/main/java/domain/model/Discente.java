@@ -6,10 +6,4 @@ public class Discente extends Usuario {
         super(email, nome, senha);
     }
 
-    public void validarSenha(String senhaFornecida) {
-        if (!this.senha.equals(senhaFornecida)) {
-            throw new IllegalArgumentException("Senha inválida para o usuário fornecido.");
-        }
-    }
-
 }
