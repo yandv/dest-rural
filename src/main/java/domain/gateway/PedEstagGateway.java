@@ -5,16 +5,20 @@ import domain.model.PedidoEstagio;
 public class PedEstagGateway {
 
     public PedidoEstagio pegarPedidoEstagioPeloNumeroPedidoEstagio(int numeroPedidoEstagio) {
-        return new PedidoEstagio(numeroPedidoEstagio, null, "Empresa Aleatória");
+        return new PedidoEstagio(numeroPedidoEstagio, "id do discente", "IBM",
+                30, 7.3, 30, true);
     }
 
-    public void salvarPedidoEstagio(PedidoEstagio pedidoEstagio) {
+    public void salvarPedEstag(PedidoEstagio pedidoEstagio) {
         System.out.println("Pedido de estágio salvo com sucesso!");
-        throw new UnsupportedOperationException("Unimplemented method 'salvarPedidoEstagio'");
     }
 
-    public PedidoEstagio criarPedEstag(String discenteId, String nomeEmpresa) {
-        return new PedidoEstagio(1, discenteId, nomeEmpresa);
+    public PedidoEstagio criarPedEstag(String discenteId, String nomeEmpresa,
+            int cargaHorariaCumprida, double ira, int cargaHorariaSemanal, boolean primeiroEstagio) {
+        return new PedidoEstagio((int) Math.floor(Math.random() * 1000000), discenteId, nomeEmpresa,
+                cargaHorariaCumprida,
+                ira,
+                cargaHorariaSemanal, primeiroEstagio);
     }
 
 }

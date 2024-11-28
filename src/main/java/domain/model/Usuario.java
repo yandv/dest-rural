@@ -8,7 +8,7 @@ public abstract class Usuario {
 
     private String email;
     private String nome;
-    private String senha;
+    protected String senha;
 
     public Usuario(String email, String nome, String senha) {
         this.id = UUID.randomUUID().toString();
