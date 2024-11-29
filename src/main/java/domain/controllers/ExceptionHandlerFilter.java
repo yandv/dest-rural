@@ -35,6 +35,8 @@ public class ExceptionHandlerFilter implements Filter {
 
             chain.doFilter(request, response);
         } catch (Exception exception) {
+            exception.printStackTrace();
+            
             if (exception instanceof DomainException) {
                 var domainException = (DomainException) exception;
                 servletResponse.setStatus(domainException.getStatusCode());
@@ -44,7 +46,6 @@ public class ExceptionHandlerFilter implements Filter {
 
             servletResponse.setStatus(500);
             response.getWriter().println("{\"message\": \"Erro interno do servidor.\"}");
-            throw exception;
         }
     }
 

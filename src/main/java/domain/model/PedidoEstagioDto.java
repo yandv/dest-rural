@@ -1,9 +1,6 @@
 package domain.model;
 
-import domain.exception.DomainException;
-import domain.exception.impl.IntershipRequestConflict;
-
-public class PedidoEstagio {
+public class PedidoEstagioDto {
 
     private final int numeroPedidoEstagio;
     private final String discenteId;
@@ -15,7 +12,7 @@ public class PedidoEstagio {
 
     private String supervisorId;
 
-    public PedidoEstagio(Integer numeroPedidoEstagio, String discenteId, String nomeEmpresa,
+    public PedidoEstagioDto(Integer numeroPedidoEstagio, String discenteId, String nomeEmpresa,
             int cargaHorariaCumprida, double ira, int cargaHorariaSemanal, boolean primeiroEstagio) {
         this.numeroPedidoEstagio = numeroPedidoEstagio;
         this.discenteId = discenteId;
@@ -26,10 +23,8 @@ public class PedidoEstagio {
         this.primeiroEstagio = primeiroEstagio;
     }
 
-    public void validarSupervisorAtribuido() {
-        if (supervisorId == null) {
-            throw new IntershipRequestConflict();
-        }
+    public void setSupervisorId(String supervisorId) {
+        this.supervisorId = supervisorId;
     }
 
     public int getNumeroPedidoEstagio() {
@@ -42,10 +37,6 @@ public class PedidoEstagio {
 
     public String getSupervisorId() {
         return supervisorId;
-    }
-
-    public void associarSupervisor(Supervisor supervisor) {
-        this.supervisorId = supervisor.getId();
     }
 
     public String getNomeEmpresa() {

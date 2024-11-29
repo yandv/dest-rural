@@ -1,6 +1,6 @@
 package domain.gateway;
 
-import domain.model.Supervisor;
+import domain.model.SupervisorDto;
 
 public class SupervisorGateway {
 
@@ -15,7 +15,7 @@ public class SupervisorGateway {
 
     protected SupervisorGateway() {}
 
-    public Supervisor criarSupervisor(String supervisorNome, String supervisorFuncao, String supervisorEmail,
+    public SupervisorDto criarSupervisor(String supervisorNome, String supervisorFuncao, String supervisorEmail,
             String supervisorSenha, String supervisorTelefone) {
         throw new UnsupportedOperationException("Unimplemented method 'criarSupervisor'");
     }

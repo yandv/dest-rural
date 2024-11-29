@@ -54,18 +54,16 @@ public class ParameterUtil {
         return Boolean.parseBoolean(value);
     }
 
-    public static <T> T parseAttribute(HttpServletRequest request, String attributeName, Class<T> clazz) {
-        var value = request.getAttribute(attributeName);
-
-        if (value == null) {
+    public static <T> T cast(Object object, Class<T> clazz) {
+        if (object == null) {
             throw new InternalServerError();
         }
 
-        if (!clazz.isInstance(value)) {
+        if (!clazz.isInstance(object)) {
             throw new InternalServerError();
         }
 
-        return clazz.cast(value);
+        return clazz.cast(object);
     }
 
 }

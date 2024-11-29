@@ -3,7 +3,7 @@ package domain.gateway;
 import java.util.HashMap;
 import java.util.Map;
 
-import domain.model.Discente;
+import domain.model.DiscenteDto;
 
 public class DiscenteGateway {
 
@@ -16,7 +16,7 @@ public class DiscenteGateway {
         return instance;
     }
 
-    private Map<String, Discente> discenteMap;
+    private Map<String, DiscenteDto> discenteMap;
 
     protected DiscenteGateway() {
         discenteMap = new HashMap<>();
@@ -25,22 +25,21 @@ public class DiscenteGateway {
     }
 
     private void criarDiscente(String email, String nome) {
-        Discente discente = new Discente(email, nome, "1234");
+        DiscenteDto discente = new DiscenteDto(email, nome, "1234");
         discenteMap.put(String.valueOf(discenteMap.size() + 1), discente);
     }
 
-    public Discente pegarDiscentePeloNumeroPedidoEstagio(int numeroPedidoEstagio) {
-        return this.discenteMap.values().stream()
-                .filter(discente -> discente.getNumeroPedidoEstagio() == numeroPedidoEstagio)
-                .findFirst().orElse(null);
-    }
-
-    public Discente pegarDiscentePeloEmail(String email) {
+    public DiscenteDto pegarDiscentePeloEmail(String email) {
         return this.discenteMap.values().stream().filter(discente -> discente.getEmail().equals(email)).findFirst()
                 .orElse(null);
     }
 
-    public void salvarDiscente(Discente discente) {
+    public DiscenteDto pegarDiscentePeloId(String discenteId) {
+        return this.discenteMap.values().stream().filter(discente -> discente.getId().equals(discenteId)).findFirst()
+                .orElse(null);
+    }
+
+    public void salvarDiscente(DiscenteDto discente) {
         this.discenteMap.put(discente.getId(), discente);
     }
 

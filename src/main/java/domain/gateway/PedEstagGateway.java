@@ -3,7 +3,7 @@ package domain.gateway;
 import java.util.HashMap;
 import java.util.Map;
 
-import domain.model.PedidoEstagio;
+import domain.model.PedidoEstagioDto;
 
 public class PedEstagGateway {
 
@@ -16,23 +16,23 @@ public class PedEstagGateway {
         return instance;
     }
 
-    private Map<Integer, PedidoEstagio> pedEstagMap;
+    private Map<Integer, PedidoEstagioDto> pedEstagMap;
 
     protected PedEstagGateway() {
         pedEstagMap = new HashMap<>();
     }
 
-    public PedidoEstagio pegarPedidoEstagioPeloNumeroPedidoEstagio(int numeroPedidoEstagio) {
+    public PedidoEstagioDto pegarPedidoEstagioPeloNumeroPedidoEstagio(int numeroPedidoEstagio) {
         return this.pedEstagMap.get(numeroPedidoEstagio);
     }
 
-    public void salvarPedEstag(PedidoEstagio pedidoEstagio) {
+    public void salvarPedEstag(PedidoEstagioDto pedidoEstagio) {
         this.pedEstagMap.put(pedidoEstagio.getNumeroPedidoEstagio(), pedidoEstagio);
     }
 
-    public PedidoEstagio criarPedEstag(String discenteId, String nomeEmpresa,
+    public PedidoEstagioDto criarPedEstag(String discenteId, String nomeEmpresa,
             int cargaHorariaCumprida, double ira, int cargaHorariaSemanal, boolean primeiroEstagio) {
-        return new PedidoEstagio((int) Math.floor(Math.random() * 1000000), discenteId, nomeEmpresa,
+        return new PedidoEstagioDto((int) Math.floor(Math.random() * 1000000), discenteId, nomeEmpresa,
                 cargaHorariaCumprida,
                 ira,
                 cargaHorariaSemanal, primeiroEstagio);

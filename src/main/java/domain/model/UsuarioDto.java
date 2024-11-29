@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import domain.exception.impl.UserInvalidPasswordException;
 
-public abstract class Usuario {
+public abstract class UsuarioDto {
 
     private String id;
 
@@ -12,7 +12,7 @@ public abstract class Usuario {
     private String nome;
     private String senha;
 
-    public Usuario(String email, String nome, String senha) {
+    public UsuarioDto(String email, String nome, String senha) {
         this.id = UUID.randomUUID().toString();
         this.email = email;
         this.nome = nome;
