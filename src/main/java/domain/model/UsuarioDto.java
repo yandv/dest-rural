@@ -19,12 +19,6 @@ public abstract class UsuarioDto {
         this.senha = senha;
     }
 
-    public void validarSenha(String senha) {
-        if (!this.senha.equals(senha)) {
-            throw new UserInvalidPasswordException();
-        }
-    }
-
     public String getId() {
         return id;
     }
