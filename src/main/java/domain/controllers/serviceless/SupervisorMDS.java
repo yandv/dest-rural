@@ -16,9 +16,15 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/without-service/criar-supervisor")
 public class SupervisorMDS extends HttpServlet {
 
+    private static SupervisorMDS instance;
+
+    public static SupervisorMDS getInstance() {
+        return instance;
+    }
+
     private PedidoEstagioDto pedidoEstagio;
 
-    private void criarSupervisor(int numeroPedidoEstagio) {
+    public void criarSupervisor(int numeroPedidoEstagio) {
         var pedidoEstagio = PedidoEstagioMDS
                 .pegarPedidoEstagioPeloNumeroPedidoEstagio(numeroPedidoEstagio);
 
@@ -36,7 +42,7 @@ public class SupervisorMDS extends HttpServlet {
         this.pedidoEstagio = pedidoEstagio;
     }
 
-    private void informarDadosCriarSupervisor(String nome, String funcao, String email, String senha, String telefone) {
+    public void informarDadosCriarSupervisor(String nome, String funcao, String email, String senha, String telefone) {
 
         validarEmail(email);
 

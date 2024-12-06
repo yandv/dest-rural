@@ -103,4 +103,8 @@ public class PedidoEstagioMDS extends HttpServlet {
         return PedEstagGateway.getInstance().pegarPedidoEstagioPeloNumeroPedidoEstagio(numeroPedidoEstagio);
     }
 
+    public PedidoEstagioDto getPedidoEstagioDto() {
+        return pedidoEstagioDto;
+    }
+
 }
