@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/with-service/criar-pedido-intencao-estagio")
 public class PedidoEstagioService extends HttpServlet {
+    
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,7 +33,7 @@ public class PedidoEstagioService extends HttpServlet {
         var nomeEmpresa = ParameterUtil.parseString(req, "nomeEmpresa");
         var primeiroEstagio = ParameterUtil.parseBoolean(req, "primeiroEstagio");
 
-        pedidoEstagioMDS.informarDadosPedEstag(discente, cargaHorariaSemanal, nomeEmpresa, primeiroEstagio);
+        pedidoEstagioMDS.informarDadosPedEstag(cargaHorariaSemanal, nomeEmpresa, primeiroEstagio);
 
         resp.sendRedirect("pedido-estagio-criado-sucesso.jsp?numeroPedidoEstagio="
                 + pedidoEstagioMDS.getPedidoEstagioDto().getNumeroPedidoEstagio()

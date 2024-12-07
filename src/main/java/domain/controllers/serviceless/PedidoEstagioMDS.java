@@ -31,6 +31,7 @@ public class PedidoEstagioMDS extends HttpServlet {
     private double ira;
 
     private PedidoEstagioDto pedidoEstagioDto;
+    private DiscenteDto discente;
 
     public void criarPedEstag(int cargaHorariaCumprida, double ira) {
         validarCargaCumprida(cargaHorariaCumprida);
@@ -40,7 +41,7 @@ public class PedidoEstagioMDS extends HttpServlet {
         this.ira = ira;
     }
 
-    public void informarDadosPedEstag(DiscenteDto discente, int cargaHorariaSemanal, String nomeEmpresa,
+    public void informarDadosPedEstag(int cargaHorariaSemanal, String nomeEmpresa,
             boolean primeiroEstagio) {
 
         validarCargaSemanal(cargaHorariaSemanal);
@@ -52,8 +53,8 @@ public class PedidoEstagioMDS extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession httpSession = req.getSession(true);
-        
-        var discente = ParameterUtil.cast(httpSession.getAttribute("usuario"), DiscenteDto.class);
+
+        this.discente = ParameterUtil.cast(httpSession.getAttribute("usuario"), DiscenteDto.class);
 
         var cargaHorariaCumprida = ParameterUtil.parseInt(req, "cargaHorariaCumprida");
         var ira = ParameterUtil.parseDouble(req, "ira");
@@ -64,7 +65,7 @@ public class PedidoEstagioMDS extends HttpServlet {
         var nomeEmpresa = ParameterUtil.parseString(req, "nomeEmpresa");
         var primeiroEstagio = ParameterUtil.parseBoolean(req, "primeiroEstagio");
 
-        this.informarDadosPedEstag(discente, cargaHorariaSemanal, nomeEmpresa, primeiroEstagio);
+        this.informarDadosPedEstag(cargaHorariaSemanal, nomeEmpresa, primeiroEstagio);
 
         resp.sendRedirect("pedido-estagio-criado-sucesso.jsp?numeroPedidoEstagio="
                 + this.pedidoEstagioDto.getNumeroPedidoEstagio()
